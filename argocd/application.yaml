@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infraflow
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/sujal862/InfraFlow-End-to-End-CICD-and-GitOps-on-AWS-EKS.git
+    targetRevision: main
+    path: helm/infraflow-chart
+    helm:
+      releaseName: infraflow
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: infraflow
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,13 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: "infraflow-backend"
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+              - backend.infraflow.svc.cluster.local:5000
+
+grafana:
+  adminPassword: "InfraFlowAdmin123"
+  service:
+    type: LoadBalancer
